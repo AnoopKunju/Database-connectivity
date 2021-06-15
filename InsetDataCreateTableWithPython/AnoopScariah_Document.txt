@@ -1,0 +1,17 @@
+NAME: Anoop Kunjumon Scariah
+ID: 1001757408
+
+Project No 1:
+Files Included:
+create.sql - sql file to create all the tables.
+insertdata.py - Python program to insert all the data from the text file to SQL database
+table_create_Output_spool.txt - contains all the information of the tables created
+quest2_spool.txt - contains all the data in the tables created
+quest34_item4_spool.txt - contains all the execution query and output in item 4
+quest34_item3_spool.txt - - contains all the retrieval queries  and output in item 3
+quest5_6_7spool.txt - contains all the query and output for question 5 , 6 and 7.
+
+Requirements of running the Python Program:
+ -pymysql
+ -pandas 
+ -sqlalchemy 

@@ -1,0 +1,103 @@
+NAME: Anoop Kunjumon Scariah
+ID: 1001757408
+
+mysql> USE axs7408;
+Database changed
+
+QUESTION 5 --------------------------------------------------------------------------------------
+
+mysql> INSERT INTO EMPLOYEE VALUES('Anoop', 'K', 'Scariah', 100175740, '18-APL-1994', '1008 Greek Row, TX', 'M', 55000, 100000000, 3);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`axs7408`.`EMPLOYEE`, CONSTRAINT `EMPSUPERFK` FOREIGN KEY (`Super_ssn`) REFERENCES `EMPLOYEE` (`Ssn`))
+----> We are trying to insert values for which the foreign key constraints dont satisfy ie it doesnt exsist in the table
+
+mysql> INSERT INTO DEPARTMENT VALUES('Testing', '10' , 122233311,'08-MAR-2021');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`axs7408`.`DEPARTMENT`, CONSTRAINT `DEPTMGRFK` FOREIGN KEY (`Mgr_ssn`) REFERENCES `EMPLOYEE` (`Ssn`))
+----> We are trying to insert values for which the foreign key constraints dont satisfy ie it the employee SSN is not present in EMPLOYEE which can satisfy can the relation between Manegr SSN
+
+mysql> INSERT INTO PROJECT VALUES('Machine Learning',12,'Arlington',67);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`axs7408`.`PROJECT`, CONSTRAINT `PROJNUMFK` FOREIGN KEY (`Dnum`) REFERENCES `DEPARTMENT` (`Dnumber`))
+----> We are trying to insert values for which the foreign key constraints dont satisfy ie it there is no DEPARTMENT Dnumber as 67 to have a realtion with Dnum.
+
+QUESTION 6 --------------------------------------------------------------------------------------
+
+mysql> Delete FROM EMPLOYEE WHERE Ssn = 123456789;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`axs7408`.`EMPLOYEE`, CONSTRAINT `EMPSUPERFK` FOREIGN KEY (`Super_ssn`) REFERENCES `EMPLOYEE` (`Ssn`))
+
+QUESTION 7 --------------------------------------------------------------------------------------
+mysql> INSERT INTO DEPARTMENT VALUES('Testing', 13, '123456789','08-MAR-2021');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM DEPARTMENT;
++----------------+---------+-----------+----------------+
+| Dname          | Dnumber | Mgr_ssn   | Mgr_start_date |
++----------------+---------+-----------+----------------+
+| Headquarters   |       1 | 888665555 | 19-JUN-1971    |
+| Networking     |       3 | 110110110 | 15-MAY-2009    |
+| Administration |       4 | 987654321 | 01-JAN-1985    |
+| Research       |       5 | 333445555 | 22-MAY-1978    |
+| Software       |       6 | 111111100 | 15-MAY-1999    |
+| Hardware       |       7 | 444444400 | 15-MAY-1998    |
+| Sales          |       8 | 555555500 | 01-JAN-1997    |
+| HR             |       9 | 112244668 | 01-FEB-1989    |
+| QA             |      11 | 913323708 | 2-FEB-2010     |
+| Customers      |      12 | 333445555 | 14-JAN-2013    |
+| Testing        |      13 | 123456789 | 08-MAR-2021    |
++----------------+---------+-----------+----------------+
+11 rows in set (0.00 sec)
+
+mysql> INSERT INTO PROJECT VALUES('Machine Learning',12,'Arlington',6);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM PROJECT;
++------------------+---------+------------+------+
+| Pname            | Pnumber | Plocation  | Dnum |
++------------------+---------+------------+------+
+| EntityAnnot      |       4 | Houston    |    5 |
+| Analysis         |       5 | Sacramento |    6 |
+| EventManagement  |       6 | Sacramento |    6 |
+| FoodDistribution |       7 | Sacramento |    6 |
+| Computerization  |      10 | Stafford   |    4 |
+| ConfigMgmt       |      11 | Atlanta    |    6 |
+| Machine Learning |      12 | Arlington  |    6 |
+| DataMining       |      13 | Sacramento |    6 |
+| Reorganization   |      20 | Houston    |    1 |
+| SearchEngine     |      22 | Arlington  |    6 |
+| MotherBoard      |      29 | Milwaukee  |    7 |
+| Benefits         |      30 | Stafford   |    4 |
+| OperatingSystem  |      61 | Sacramento |    6 |
+| DatabaseSystems  |      62 | Atlanta    |    6 |
+| Middleware       |      63 | Atlanta    |    6 |
+| Advertizing      |      70 | Arlington  |    9 |
+| InkjetPrinters   |      91 | Milwaukee  |    7 |
+| LaserPrinters    |      92 | Milwaukee  |    7 |
+| HumanResource    |      95 | Arlington  |    9 |
++------------------+---------+------------+------+
+19 rows in set (0.00 sec)
+
+mysql> INSERT INTO DEPT_LOCATIONS VALUES(12,'Brazil');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM DEPT_LOCATIONS;
++---------+-------------+
+| Dnumber | Dlocation   |
++---------+-------------+
+|       1 | Houston     |
+|       4 | Stafford    |
+|       5 | Bellaire    |
+|       5 | Houston     |
+|       5 | Sugarland   |
+|       6 | Atlanta     |
+|       6 | Sacramento  |
+|       7 | Milwaukee   |
+|       8 | Chicago     |
+|       8 | Dallas      |
+|       8 | Miami       |
+|       8 | Philadephia |
+|       9 | Arlington   |
+|       9 | Seattle     |
+|      11 | Austin      |
+|      12 | Brazil      |
++---------+-------------+
+16 rows in set (0.00 sec)
+
+mysql> notee
