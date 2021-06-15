@@ -1,2 +1,4 @@
 # Database-connectivity
-Database connectivity using RSP and C.
+connecting and uploading data to database server using Python , C both modules included.
+
+Python uses Dataframes to make the execution easier
