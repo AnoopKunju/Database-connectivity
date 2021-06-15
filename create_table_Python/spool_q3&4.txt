@@ -1,0 +1,349 @@
+
+----------ITEM 4 QUERIES--------
+
+mysql> INSERT INTO DEPARTMENT VALUES('Services', 1, '12345689', '11-AUG-2012');
+ERROR 1062 (23000): Duplicate entry '1' for key 'DEPARTMENT.PRIMARY'
+mysql> INSERT INTO DEPARTMENT VALUES('Purchasing', 3, '990110110', '02-FEB-2013');
+ERROR 1062 (23000): Duplicate entry '3' for key 'DEPARTMENT.PRIMARY'
+mysql> INSERT INTO DEPARTMENT VALUES('Purchasing', 3, '990110110', '02-FEB-2013');
+ERROR 1062 (23000): Duplicate entry '3' for key 'DEPARTMENT.PRIMARY'
+mysql> INSERT INTO DEPARTMENT VALUES('Customers', 12, '3334455555', '14-JAN-2013');
+ERROR 1406 (22001): Data too long for column 'Mgr_ssn' at row 1
+mysql> INSERT INTO DEPARTMENT VALUES('Customers', 12, '333445555', '14-JAN-2013');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> SELECT * FROM DEPARTMENT;
++----------------+---------+-----------+----------------+
+| Dname          | Dnumber | Mgr_ssn   | Mgr_start_date |
++----------------+---------+-----------+----------------+
+| Headquarters   |       1 | 888665555 | 19-JUN-1971    |
+| Networking     |       3 | 110110110 | 15-MAY-2009    |
+| Administration |       4 | 987654321 | 01-JAN-1985    |
+| Research       |       5 | 333445555 | 22-MAY-1978    |
+| Software       |       6 | 111111100 | 15-MAY-1999    |
+| Hardware       |       7 | 444444400 | 15-MAY-1998    |
+| Sales          |       8 | 555555500 | 01-JAN-1997    |
+| HR             |       9 | 112244668 | 01-FEB-1989    |
+| QA             |      11 | 913323708 | 2-FEB-2010     |
+| Customers      |      12 | 333445555 | 14-JAN-2013    |
++----------------+---------+-----------+----------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM DEPT_LOCATIONS;
++---------+-------------+
+| Dnumber | Dlocation   |
++---------+-------------+
+|       1 | Houston     |
+|       4 | Stafford    |
+|       5 | Bellaire    |
+|       5 | Houston     |
+|       5 | Sugarland   |
+|       6 | Atlanta     |
+|       6 | Sacramento  |
+|       7 | Milwaukee   |
+|       8 | Chicago     |
+|       8 | Dallas      |
+|       8 | Miami       |
+|       8 | Philadephia |
+|       8 | Seattle     |
+|       9 | Arlington   |
+|      11 | Austin      |
++---------+-------------+
+15 rows in set (0.00 sec)
+
+mysql> UPDATE DEPT_LOCATIONS SET Dnumber = 9 WHERE Dlocation = 'Seattle';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM DEPT_LOCATIONS;
++---------+-------------+
+| Dnumber | Dlocation   |
++---------+-------------+
+|       1 | Houston     |
+|       4 | Stafford    |
+|       5 | Bellaire    |
+|       5 | Houston     |
+|       5 | Sugarland   |
+|       6 | Atlanta     |
+|       6 | Sacramento  |
+|       7 | Milwaukee   |
+|       8 | Chicago     |
+|       8 | Dallas      |
+|       8 | Miami       |
+|       8 | Philadephia |
+|       9 | Arlington   |
+|       9 | Seattle     |
+|      11 | Austin      |
++---------+-------------+
+15 rows in set (0.00 sec)
+
+mysql> SELECT Ssn, Salary FROM EMPLOYEE WHERE Ssn = 444444444;
+Empty set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET Salary = 55000 WHERE Ssn = 444444444;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT Ssn, Salary FROM EMPLOYEE WHERE Ssn = 444444444;
+Empty set (0.00 sec)
+
+INSERT INTO EMPLOYEE VALUES('Jane', 'B', 'Smith', '6' at line 1
+mysql> INSERT INTO EMPLOYEE VALUES('Jane', 'B', 'Smith', '666666606', '01-MAR-1980','3556 W Second Street, Miami, FL', 'F', 85000, '666666603', 5);
+ERROR 1062 (23000): Duplicate entry '666666606' for key 'EMPLOYEE.PRIMARY'
+mysql> SELECT * FROM EMPLOYEE WHERE Essn = 66684444;
+ERROR 1054 (42S22): Unknown column 'Essn' in 'where clause'
+mysql> SELECT * FROM WORKS_ON WHERE Essn = 66684444;
+Empty set (0.00 sec)
+
+mysql> UPDATE WORKS_ON SET Hours= 25 WHERE Pno = 1 AND Essn = 666884444;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT * FROM WORKS_ON WHERE Essn = 66684444;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE WHERE Ssn = 432765098;
++-------+-------+---------+-----------+-------------+-------------------------+------+----------+-----------+-----+
+| Fname | Minit | Lname   | Ssn       | Bdate       | Address                 | Sex  | Salary   | Super_ssn | Dno |
++-------+-------+---------+-----------+-------------+-------------------------+------+----------+-----------+-----+
+| Cindy | K     | Burklow | 432765098 | 23-FEB-1984 | 2015 Neil Ave,Miami,FL, | F    | 45000.00 | 444444402 |   6 |
++-------+-------+---------+-----------+-------------+-------------------------+------+----------+-----------+-----+
+1 row in set (0.00 sec)
+
+mysql> DELETE FROM EMPLOYEE WHERE Ssn = 432765098;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`srn3489`.`WORKS_ON`, CONSTRAINT `FK_WORKS_ON_EMPLOYEE` FOREIGN KEY (`Essn`) REFERENCES `EMPLOYEE` (`Ssn`))
+mysql> SELECT * FROM DEPARTMENT WHERE Dnumber = 9;
++-------+---------+-----------+----------------+
+| Dname | Dnumber | Mgr_ssn   | Mgr_start_date |
++-------+---------+-----------+----------------+
+| HR    |       9 | 112244668 | 01-FEB-1989    |
++-------+---------+-----------+----------------+
+1 row in set (0.01 sec)
+mysql> DELETE FROM DEPARTMENT WHERE Dnumber = 9;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`srn3489`.`EMPLOYEE`, CONSTRAINT `FK_DEPARTMENT` FOREIGN KEY (`Dno`) REFERENCES `DEPARTMENT` (`Dnumber`))
+mysql> SELECT * FROM DEPENDENT WHERE Essn = 666666608;
++-----------+----------------+------+-------------+--------------+
+| Essn      | Dependent_name | Sex  | Bdate       | Relationship |
++-----------+----------------+------+-------------+--------------+
+| 666666608 | Katherin Head  | F    | 19-MAY-1964 | Spouse       |
+| 666666608 | Monica Head    | F    | 19-MAY-1937 | Children     |
+| 666666608 | Rachel Head    | M    | 18-MAY-1937 | Children     |
++-----------+----------------+------+-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM DEPENDENT WHERE Essn = 666666608;
+Query OK, 3 rows affected (0.05 sec)
+
+mysql> SELECT * FROM DEPENDENT WHERE Essn = 666666608;
+Empty set (0.00 sec)
+
+-----------------------------ITEM 3 QUERIES----------------------------------------
+
+
+mysql> SELECT * FROM EMPLOYEE WHERE Lname IN ('Jones','James');
++-------+-------+-------+-----------+-------------+--------------------------------+------+----------+-----------+-----+
+| Fname | Minit | Lname | Ssn       | Bdate       | Address                        | Sex  | Salary   | Super_ssn | Dno |
++-------+-------+-------+-----------+-------------+--------------------------------+------+----------+-----------+-----+
+| Jared | D     | James | 111111100 | 10-OCT-1966 | 123 Peachtr,Atlanta,GA,        | M    | 85000.00 | NULL      |   6 |
+| Jon   | C     | Jones | 111111101 | 14-NOV-1967 | 111 Allgood,Atlanta,GA,        | M    | 45000.00 | 111111100 |   6 |
+| Megan | G     | Jones | 254937381 | 02-MAR-1961 | 528 Stone CT,Chicago,IL,       | F    | 62000.00 | 666666600 |   8 |
+| John  | C     | James | 555555500 | 30-JUN-1975 | 766 Bloomington,Sacramento,CA, | M    | 81000.00 | NULL      |   8 |
++-------+-------+-------+-----------+-------------+--------------------------------+------+----------+-----------+-----+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE WHERE Fname IN ('Kim','Wilson');
++--------+-------+--------+-----------+-------------+------------------------------+------+----------+-----------+-----+
+| Fname  | Minit | Lname  | Ssn       | Bdate       | Address                      | Sex  | Salary   | Super_ssn | Dno |
++--------+-------+--------+-----------+-------------+------------------------------+------+----------+-----------+-----+
+| Wilson | A     | Holmes | 242916639 | 02-JUN-1971 | 21 South Co,Arlington,TX,    | M    | 72500.00 | 555555500 |   4 |
+| Kim    | C     | Grace  | 333333300 | 23-OCT-1970 | 667 Mills Ave,Sacramento,CA, | F    | 79000.00 | NULL      |   6 |
+| Kim    | G     | Ted    | 444222666 | 15-APR-1968 | 3648 Tree Cir,Austin,TX,     | M    | 50000.00 | 999999999 |   8 |
++--------+-------+--------+-----------+-------------+------------------------------+------+----------+-----------+-----+
+3 rows in set (0.00 sec)
+
+mysql> SELECT E.Fname, E.Minit, E.Lname, E.Ssn, COUNT(W.Hours) AS C FROM EMPLOYEE AS E, WORKS_ON AS W WHERE E.Ssn = W.Essn GROUP BY E.Ssn, E.Fname, E.Lname HAVING COUNT(W.Pno) > 1;
++----------+-------+----------+-----------+----+
+| Fname    | Minit | Lname    | Ssn       | C  |
++----------+-------+----------+-----------+----+
+| Cameron  | D     | Thirteen | 111422203 |  2 |
+| John     | B     | Smith    | 123456789 |  2 |
+| Richard  | T     | Koelbel  | 214370999 |  2 |
+| Erin     | A     | Maxfield | 242535609 |  2 |
+| Wilson   | A     | Holmes   | 242916639 |  3 |
+| Jake     | D     | Sheen    | 245239264 |  3 |
+| Frank    | T     | Wong     | 333445555 |  3 |
+| Leonard  | H     | Moody    | 349273344 |  2 |
+| Percy    | M     | Liang    | 398172999 |  2 |
+| Joyce    | A     | English  | 453453453 |  2 |
+| Red      | A     | Bacher   | 666666613 |  3 |
+| Jennifer | S     | Wallace  | 987654321 |  2 |
+| Ahmad    | V     | Jabbar   | 987987987 |  2 |
+| Alicia   | J     | Zelaya   | 999887777 |  2 |
+| Roy      | C     | Lewallen | 999999999 | 13 |
++----------+-------+----------+-----------+----+
+15 rows in set (0.00 sec)
+
+mysql> SELECT P.Pname, P.Pnumber, P.Plocation, COUNT(W.Essn) AS C FROM PROJECT AS P, WORKS_ON AS W WHERE P.Pnumber = W.Pno GROUP BY P.Pname, P.Pnumber;
++------------------+---------+------------+----+
+| Pname            | Pnumber | Plocation  | C  |
++------------------+---------+------------+----+
+| EntityAnnot      |       4 | Houston    |  3 |
+| Analysis         |       5 | Sacramento |  6 |
+| EventManagement  |       6 | Sacramento |  5 |
+| FoodDistribution |       7 | Sacramento |  5 |
+| Computerization  |      10 | Stafford   |  6 |
+| ConfigMgmt       |      11 | Atlanta    |  3 |
+| DataMining       |      13 | Sacramento |  1 |
+| Reorganization   |      20 | Houston    |  3 |
+| SearchEngine     |      22 | Arlington  |  2 |
+| MotherBoard      |      29 | Milwaukee  |  3 |
+| Benefits         |      30 | Stafford   |  4 |
+| OperatingSystem  |      61 | Sacramento | 11 |
+| DatabaseSystems  |      62 | Atlanta    | 11 |
+| Middleware       |      63 | Atlanta    |  9 |
+| Advertizing      |      70 | Arlington  |  4 |
+| InkjetPrinters   |      91 | Milwaukee  | 10 |
+| LaserPrinters    |      92 | Milwaukee  |  5 |
+| HumanResource    |      95 | Arlington  |  4 |
++------------------+---------+------------+----+
+18 rows in set (0.01 sec)
+
+
+mysql> SELECT E.Fname, E.Lname, P.Pname, P.Pnumber, W.Hours FROM EMPLOYEE AS E, WORKS_ON AS W, PROJECT AS P, DEPT_LOCATIONS AS D WHERE E.Ssn = W.Essn AND W.Pno = P.Pnumber AND D.Dnumber = E.Dno AND D.Dnumber = 5 AND D.Dlocation = 'Houston';
++---------+---------+------------------+---------+-------+
+| Fname   | Lname   | Pname            | Pnumber | Hours |
++---------+---------+------------------+---------+-------+
+| John    | Smith   | Analysis         |       5 |  32.5 |
+| John    | Smith   | EventManagement  |       6 |   7.5 |
+| Frank   | Wong    | FoodDistribution |       7 |  10.0 |
+| Frank   | Wong    | Computerization  |      10 |  10.0 |
+| Frank   | Wong    | Reorganization   |      20 |  10.0 |
+| Joyce   | English | Analysis         |       5 |  20.0 |
+| Joyce   | English | EventManagement  |       6 |  20.0 |
+| Michael | Morgan  | EntityAnnot      |       4 |  11.0 |
+| Ramesh  | Narayan | FoodDistribution |       7 |  40.0 |
+| James   | Miller  | MotherBoard      |      29 |  15.0 |
++---------+---------+------------------+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT E.Fname, E.Lname, SUM(W.Hours) AS Total FROM EMPLOYEE AS E, WORKS_ON AS W, PROJECT AS P WHERE E.Ssn = W.Essn AND W.Pno = P.Pnumber GROUP BY E.Fname, E.Lname HAVING SUM(W.Hours) >40; 
++---------+----------+------+
+| Fname   | Lname    | Total |
++---------+----------+------+
+| Jake    | Sheen    | 55.0 |
+| Cameron | Thirteen | 50.0 |
+| Red     | Bacher   | 50.0 |
+| Josh    | Zell     | 48.0 |
+| Jeff    | Chase    | 46.0 |
+| Nandita | Ball     | 44.0 |
++---------+----------+------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT M.Fname, M.Lname, SUM(E.Ssn) AS S FROM EMPLOYEE AS E, EMPLOYEE AS M WHERE E.Super_ssn = M.Ssn GROUP BY M.Fname, M.Lname;
++----------+----------+------------+
+| Fname    | Lname    | S          |
++----------+----------+------------+
+| Jared    | James    |  443443416 |
+| Juan     | Linda    |  479473498 |
+| John     | Smith    |  241625699 |
+| Evan     | Wallis   |  666666606 |
+| Josh     | Zell     |  444444409 |
+| John     | Ed       |  673466642 |
+| Kim      | Grace    |  333333301 |
+| Frank    | Wong     | 1243794686 |
+| Alex     | Freed    | 2471867895 |
+| Bonnie   | Bays     |  614370310 |
+| Alec     | Best     |  432765098 |
+| Sam      | Snedden  |  913353347 |
+| John     | James    | 1041007749 |
+| Nandita  | Ball     |  425177268 |
+| Bob      | Bender   | 2588270583 |
+| Jill     | Jarvis   |  666666603 |
+| Kate     | King     | 1999999824 |
+| Lyle     | Leslie   | 1333333209 |
+| Billie   | King     |  666666606 |
+| Gerald   | Small    |  666666610 |
+| Naveen   | Drew     |  666666611 |
+| Carl     | Reedy    |  666666612 |
+| Sammy    | Hall     | 1303335846 |
+| Red      | Bacher   |  516084834 |
+| Jennifer | Wallace  | 1987875764 |
+| Ahmad    | Jabbar   |  111422203 |
+| Roy      | Lewallen | 1564812553 |
++----------+----------+------------+
+27 rows in set (0.00 sec)
+
+mysql> SELECT P.Pname, P.Pnumber, SUM(W.Hours)*7 AS Total FROM PROJECT AS P, WORKS_ON AS W WHERE P.Pnumber = W.Pno GROUP BY P.Pname, P.Pnumber;
++------------------+---------+--------+
+| Pname            | Pnumber |  Total  |
++------------------+---------+--------+
+| Advertizing      |      70 |  504.0 |
+| Analysis         |       5 |  619.5 |
+| Benefits         |      30 |  413.0 |
+| Computerization  |      10 |  833.0 |
+| ConfigMgmt       |      11 |  455.0 |
+| DatabaseSystems  |      62 | 2429.0 |
+| DataMining       |      13 |  126.0 |
+| EntityAnnot      |       4 |  427.0 |
+| EventManagement  |       6 |  311.5 |
+| FoodDistribution |       7 |  518.0 |
+| HumanResource    |      95 |  707.0 |
+| InkjetPrinters   |      91 | 2324.0 |
+| LaserPrinters    |      92 | 1106.0 |
+| Middleware       |      63 | 1750.0 |
+| MotherBoard      |      29 |  280.0 |
+| OperatingSystem  |      61 | 2506.0 |
+| Reorganization   |      20 |  203.0 |
+| SearchEngine     |      22 |  238.0 |
++------------------+---------+--------+
+18 rows in set (0.00 sec)
+
+mysql> SELECT E.Ssn, E.Fname, E.Lname, COUNT(D.Dependent_name) AS C FROM EMPLOYEE AS E, DEPENDENT AS D WHERE E.Ssn = D.Essn GROUP BY E.Ssn, E.Fname, E.Lname HAVING COUNT(D.Dependent_name) >2;
++-----------+--------+-------+---+
+| Ssn       | Fname  | Lname | C |
++-----------+--------+-------+---+
+| 444444401 | Bonnie | Bays  | 3 |
++-----------+--------+-------+---+
+1 row in set (0.01 sec)
+
+mysql> SELECT E.Ssn, E.Fname, E.Lname, COUNT(E.Ssn) AS N FROM EMPLOYEE AS E, DEPENDENT AS D WHERE E.Ssn = D.Essn AND D.Relationship = 'Children' GROUP BY E.Ssn, E.Fname, E.Lname HAVING COUNT(E.Ssn) > 1;
++-----------+--------+-------+---+
+| Ssn       | Fname  | Lname | N |
++-----------+--------+-------+---+
+| 444444401 | Bonnie | Bays  | 2 |
++-----------+--------+-------+---+
+1 row in set (0.00 sec)
+
+mysql> SELECT E.Fname, E.Lname, D.Dname FROM EMPLOYEE AS E, DEPT_LOCATIONS AS L, DEPARTMENT AS D WHERE  D.Dnumber = L.Dnumber AND E.Dno = D.Dnumber AND L.Dlocation = 'Atlanta';
++-----------+----------+----------+
+| Fname     | Lname    | Dname    |
++-----------+----------+----------+
+| Alex      | Yu       | Software |
+| Jared     | James    | Software |
+| Jon       | Jones    | Software |
+| Justin    | Mark     | Software |
+| Brad      | Knight   | Software |
+| Debra     | Hall     | Software |
+| John      | Ed       | Software |
+| Christina | Hisel    | Software |
+| Jake      | Sheen    | Software |
+| Kim       | Grace    | Software |
+| Jeff      | Chase    | Software |
+| Jose      | Barbara  | Software |
+| Cindy     | Burklow  | Software |
+| Nandita   | Ball     | Software |
+| Penny     | Wolowitz | Software |
+| Zach      | Geller   | Software |
++-----------+----------+----------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT D.Dnumber, D.Dname, COUNT(P.Pnumber) AS C FROM DEPARTMENT AS D, DEPT_LOCATIONS AS L, PROJECT AS P WHERE P.Dnum = D.Dnumber AND D.Dnumber = L.Dnumber AND L.Dlocation = 'Houston' GROUP BY D.Dnumber, D.Dname;
++---------+--------------+---+
+| Dnumber | Dname        | C |
++---------+--------------+---+
+|       1 | Headquarters | 1 |
+|       5 | Research     | 1 |
++---------+--------------+---+
+2 rows in set (0.00 sec)
+
+mysql> notee
